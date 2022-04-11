@@ -1,0 +1,498 @@
+{% extends '../layout/layout.html' %}
+{% load static i18n %}
+
+{% block title %}
+{% trans 'List of Doctors' %}
+{% endblock %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet"
+    href="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/formvalidation/dist/css/formValidation.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/fullcalendar/fullcalendar.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/flatpickr/flatpickr.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/select2/select2.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/editor.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/css/pages/app-calendar.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" />
+
+
+
+{% endblock %}
+{% block body %}
+<div class="content-wrapper">
+    <!-- Content -->
+
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h6 class="breadcrumb-wrapper py-3 mb-4">
+            <span class="text-muted fw-light"> {% trans 'Doctors' %} / {% trans 'List Doctors' %} /</span>
+            {% trans 'Doctor'%}
+        </h6>
+        <div class="row mb-5">
+            <div class="card app-calendar-wrapper">
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="timeZones" class="form-label">rad0</label>
+                        <select id="timeZones" class="select2 form-select patient_select" id="patient_select"></select>
+                    </div>
+                </div>
+
+
+
+                <table>
+                    {% for data in admittance_types %}
+                    <tr>
+                        <td>{{ data.title }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+
+                <table>
+                    {% for data in admittance %}
+
+
+                    <tr data_id="{{data.id}}" class="ad_box" id="ad_box_{{data.id}}">
+                        <td data_date='{{data.date|date:"Y-m-d"}}' id="ad_date_{{data.id}}">
+                            {{data.date|date:"Y-m-d"}}</td>
+                        <td data_patient='{{data.patient.surname}}' id="ad_patient_{{data.id}}">
+                            {{data.patient.surname}}</td>
+                        <td data_start='{{data.start_hour|time:"H:i:s"}}' id="ad_sh_{{data.id}}">
+                            {{data.start_hour|time:"H:i:s"}}</td>
+                        <td data_end='{{data.end_hour|time:"H:i:s"}}'" id=" ad_eh_{{data.id}}">{{data.end_hour}}</td>
+                        <td>{{ data.work_hour }}</td>
+                        <td data_color='{{ data.admittance_type.color_class|lower }}' id="ad_co_{{data.id}}">
+                            {{ data.admittance_type.color_class}}</td>
+                        <td data_type='{{ data.admittance_type.title }}' id="ad_ty_{{data.id}}">
+                            {{data.admittance_type.title }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+                <a href="{% url 'doctor_list' %}">doc</a>
+                <table>
+                    {% for data in timetable %}
+                    <tr>
+                        <td id="monday_start" data_value="{{data.monday_start|time:'H:i:s'}}">Monday : {{
+                            data.monday_start }}</td>
+                        <td id="monday_end" data_value="{{data.monday_end|time:'H:i:s'}}">Monday : {{ data.monday_end }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="tuesday_start" data_value="{{data.tuesday_start|time:'H:i:s'}}">Tuesday : {{
+                            data.tuesday_start }}
+                        </td>
+                        <td id="tuesday_end" data_value="{{data.tuesday_end|time:'H:i:s'}}">Tuesday : {{
+                            data.tuesday_end }}</td>
+                    </tr>
+                    <tr>
+                        <td id="wednesday_start" data_value="{{data.wednesday_start|time:'H:i:s'}}">Wednesday :
+                            {{data.wednesday_start }}</td>
+                        <td id="wednesday_end" data_value="{{data.wednesday_end|time:'H:i:s'}}">Wednesday : {{
+                            data.wednesday_end }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="thursday_start" data_value="{{data.thursday_start|time:'H:i:s'}}">Thursday :
+                            {{ data.thursday_start }}</td>
+                        <td id="thursday_end" data_value="{{data.thursday_end|time:'H:i:s'}}">Thursday : {{
+                            data.thursday_end }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="friday_start" data_value="{{data.friday_start|time:'H:i:s'}}">Friday : {{
+                            data.friday_start }}</td>
+                        <td id="friday_end" data_value="{{data.friday_end|time:'H:i:s'}}">Friday : {{ data.friday_end }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="saturday_start" data_value="{{data.saturday_start|time:'H:i:s'}}">Saturday :
+                            {{ data.saturday_start }}</td>
+                        <td id="saturday_end" data_value="{{data.saturday_end|time:'H:i:s'}}">Saturday : {{
+                            data.saturday_end }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="sunday_start" data_value="{{data.sunday_start|time:'H:i:s'}}">Sunday : {{
+                            data.sunday_start }}</td>
+                        <td id="sunday_end" data_value="{{data.sunday_end|time:'H:i:s'}}">Sunday : {{ data.sunday_end }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+
+                <div class="row g-0">
+                    <!-- Calendar Sidebar -->
+                    <div class="app-calendar-sidebar col" id="app-calendar-sidebar">
+                        <div class="border-bottom p-4 my-sm-0 mb-3">
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-toggle-sidebar" data-bs-toggle="offcanvas"
+                                    data-bs-target="#addEventSidebar" aria-controls="addEventSidebar">
+                                    <i class="bx bx-plus"></i>
+                                    <span class="align-middle">Add Event</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <!-- inline calendar (flatpicker) -->
+                            <div class="ms-n2">
+                                <div class="inline-calendar"></div>
+                            </div>
+
+                            <hr class="container-m-nx my-4" />
+
+                            <!-- Filter -->
+                            <div class="mb-4">
+                                <small class="text-small text-muted text-uppercase align-middle">Filter</small>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input class="form-check-input select-all" type="checkbox" id="selectAll"
+                                    data-value="all" checked />
+                                <label class="form-check-label" for="selectAll">View All</label>
+                            </div>
+
+                            <div class="app-calendar-events-filter">
+                                {% for data in admittance_types %}
+                                <div class="form-check form-check-{{ data.color_class }} mb-2">
+
+                                    <input class="form-check-input input-filter" type="checkbox"
+                                        id="select-{{ data.color_class }}" data-value="{{ data.title|lower }}"
+                                        checked />
+                                    <label class="form-check-label" for="select-{{ data.color_class }}">{{ data.title
+                                        }}</label>
+                                </div>
+                                {% endfor %}
+
+
+
+                                <!-- <div class="form-check form-check-danger mb-2">
+                
+                                  <input class="form-check-input input-filter" type="checkbox" id="select-personal"
+                                    data-value="personal" checked />
+                                  <label class="form-check-label" for="select-personal">Personal</label>
+                                </div> -->
+
+                                <!-- <div class="form-check form-check-warning mb-2">
+                                  <input class="form-check-input input-filter" type="checkbox" id="select-family" data-value="family"
+                                    checked />
+                                  <label class="form-check-label" for="select-family">Family</label>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Calendar Sidebar -->
+
+                    <!-- Calendar & Modal -->
+                    <div class="app-calendar-content col">
+                        <div class="card shadow-none border-0">
+                            <div class="card-body pb-0">
+                                <!-- FullCalendar -->
+                                <div id="calendar"></div>
+                            </div>
+                        </div>
+                        <div class="app-overlay"></div>
+                        <!-- FullCalendar Offcanvas -->
+                        <div class="offcanvas offcanvas-end event-sidebar" tabindex="-1" id="addEventSidebar"
+                            aria-labelledby="addEventSidebarLabel">
+                            <div class="offcanvas-header border-bottom">
+                                <h6 class="offcanvas-title" id="addEventSidebarLabel">Add Event</h6>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+
+                                <form method="POST" class="event-form pt-0" id="eventForm"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ formset.management_form }}
+                                    {% for field in form %}
+                                    <div class="mb-3">
+                                        <label class="form-label" for="multicol-first-name">{{ field.label }}</label>
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </div>
+                                    {% endfor %}
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="timeZones" class="form-label">Timezone</label>
+                                        <select id="timeZones" class="select2 form-select">
+                                            <option value="">Select Timezone</option>
+                                            <option value="-12">(GMT-12:00) International Date Line West</option>
+                                            <option value="-11">(GMT-11:00) Midway Island, Samoa</option>
+                                            <option value="-10">(GMT-10:00) Hawaii</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="d-flex justify-content-start justify-content-sm-between my-4 mb-3">
+                                        <div>
+                                            <button type="sub"
+                                                class="btn btn-primary btn-add-event me-1 me-sm-3 d-none">
+                                                <i class="bx bxs-save"></i>
+                                                <span>{% trans 'Saqlash' %}</span>
+                                            </button>
+                                            <button type="reset"
+                                                class="btn btn-primary btn-update-event d-none me-1 me-sm-3">
+                                                Update
+                                            </button>
+                                            <button type="reset" class="btn btn-label-secondary btn-cancel me-1 me-sm-0"
+                                                data-bs-dismiss="offcanvas">
+                                                {% trans 'Cancel' %}
+                                            </button>
+                                        </div>
+                                        <div><button
+                                                class="btn btn-label-danger btn-delete-event d-none">Delete</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Calendar & Modal -->
+                </div>
+            </div>
+        </div>
+
+        <!--/ Add New Credit Card Modal -->
+
+        <!-- /Modal -->
+    </div>
+    <!-- / Content -->
+
+
+
+    <div class="content-backdrop fade"></div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'assets/vendor/libs/fullcalendar/fullcalendar.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<!-- AutoFocus plugin, automatically focus on the first invalid input  -->
+
+<script src="{% static 'assets/vendor/libs/flatpickr/flatpickr.js' %}"></script>
+<!-- <script src="{% static 'assets/vendor/libs/moment/moment.js' %}"></script> -->
+
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+<!-- <script src="{% static 'assets/js/app-calendar-events.js' %}"></script> -->
+<script src="{% static 'assets/js/app-calendar.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+
+
+    'use strict';
+    let calendarsColor = {}
+
+    $(".patient_select").select2({
+
+        placeholder: '{% trans "Select Patient" %}',
+
+        ajax: {
+            url: function (params) {
+                return 'http://127.0.0.1:8000/api/v1/patients/?search=' + params.term;
+            },
+            dataType: 'json',
+            delay: 250,
+            processResults: function (data) {
+                // Transforms the top-level key of the response object from 'items' to 'results'
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            id: item.id,
+                            text: "#" + item.card_id + " " + item.name + " " + item.surname + " " + item.birthday
+                        };
+                    })
+                };
+            },
+            // results: function (data, page) {
+            //   var more = (page * 30) < data.total_count; // whether or not there are more results available
+
+            //   // notice we return the value of more so Select2 knows if more results can be loaded
+            //   return { results: data.items, more: more };
+            // }
+        }
+    })
+
+    let businessHours = [
+
+        {
+            daysOfWeek: [1],
+            startTime: $("#monday_start").attr("data_value"),
+            endTime: $("#monday_end").attr("data_value")
+        },
+        {
+            daysOfWeek: [2],
+            startTime: $("#tuesday_start").attr("data_value"),
+            endTime: $("#tuesday_end").attr("data_value")
+        },
+        {
+            daysOfWeek: [3],
+            startTime: $("#wednesday_start").attr("data_value"),
+            endTime: $("#wednesday_end").attr("data_value")
+        },
+        {
+            daysOfWeek: [4],
+            startTime: $("#thursday_start").attr("data_value"),
+            endTime: $("#thursday_end").attr("data_value")
+        },
+        {
+            daysOfWeek: [5],
+            startTime: $("#friday_start").attr("data_value"),
+            endTime: $("#friday_end").attr("data_value")
+        },
+        {
+            daysOfWeek: [6],
+            startTime: $("#saturday_start").attr("data_value"),
+            endTime: $("#saturday_end").attr("data_value")
+        },
+        {
+            daysOfWeek: [7],
+            startTime: $("#sunday_start").attr("data_value"),
+            endTime: $("#sunday_end").attr("data_value")
+        },
+    ]
+
+    let events = [
+        // {
+        //   url: "{% url 'admittance:list' %}",
+        //   title: '{{ doctor.name }}',
+        //   start: '2022-04-01',
+        //   extendedProps: {
+        //     calendar: 'Business'
+        //   },
+        // },
+    ]
+
+    let rad0 = []
+    $(".ad_box").each(function () {
+        let id = $(this).attr("data_id")
+        let date = $(this).find("#ad_date_" + id).attr("data_date")
+        let start_hour = $(this).find("#ad_sh_" + id).attr("data_start")
+        let end_hour = $(this).find("#ad_eh_" + id).attr("data_end")
+        let color_type = $(this).find("#ad_ty_" + id).attr("data_type")
+        let color_class = $(this).find("#ad_co_" + id).attr("data_color")
+        let patient = $(this).find("#ad_patient_" + id).attr("data_patient")
+
+        calendarsColor[color_type] = color_class
+        console.log(color_class)
+
+        let color;
+        switch (color_class) {
+            case "primary":
+                color = "#0d6efd"
+                break;
+            case "danger":
+                color = "#dc3545"
+                break;
+            case "secondary":
+                color = "#6c757d"
+                break;
+            case "success":
+                color = "#198754"
+                break;
+            case "warning":
+                color = "#ffc107"
+                break;
+            case "light":
+                color = "#f8f9fa"
+                break;
+            case "dark":
+                color = "#212529"
+                break;
+        }
+        events.push(
+            {
+                title: patient,
+                start: date + 'T' + start_hour,
+                end: date + 'T' + end_hour,
+                color: color,
+                extendedProps: {
+                    calendar: color_type
+                }
+            },
+
+        )
+
+
+    })
+
+
+  // var select2 = $('.select2');
+  // // For all Select2
+  // if (select2.length) {
+  //   select2.each(function () {
+  //     var $this = $(this);
+  //     $this.wrap('<div class="position-relative"></div>');
+  //     $this.select2({
+  //       dropdownParent: $this.parent()
+  //     });
+  //   });
+  // }
+</script>
+<script>
+    $(document).ready(function () {
+        // $(".patient_select").select2();
+        // $(".patient_select").select2({
+        //   placeholder: '{% trans "Select Patient" %}',
+
+        //   ajax: {
+        //     url: function (params) {
+        //       return 'http://127.0.0.1:8000/api/v1/patients/?search=' + params.term;
+        //     },
+        //     dataType: 'json',
+        //     delay: 250,
+        //     processResults: function (data) {
+
+        //       // Transforms the top-level key of the response object from 'items' to 'results'
+        //       return {
+        //         results: $.map(data, function (item) {
+        //           return {
+        //             id: item.id,
+        //             text: "#" + item.card_id + " " + item.name + " " + item.surname + " " + item.birthday
+        //           };
+        //         })
+        //       };
+        //     },
+        //     // results: function (data, page) {
+        //     //   var more = (page * 30) < data.total_count; // whether or not there are more results available
+
+        //     //   // notice we return the value of more so Select2 knows if more results can be loaded
+        //     //   return { results: data.items, more: more };
+        //     // }
+        //   }
+        // })
+    })
+</script>
+<!-- <script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script> -->
+
+{% endblock %}
+
+
+<!-- <div class="spinner_box d-none">
+        <div class="my_spinner">
+          <svg viewBox="0 0 120 120" class="my_spinner_svg">
+            <g class="g1">
+              <rect class="r1" x="30" y="30" width="60" height="60" />
+              <rect class="big" x="81" y="81" width="8" height="8" />
+              <rect class="r_ol" x="31" y="31" width="8" height="8" />
+              <rect class="r_or" x="81" y="31" width="8" height="8" />
+              <rect class="r_ul" x="31" y="81" width="8" height="8" />
+              <xrect class="r_ur" x="81" y="81" width="8" height="8" />
+            </g>
+          </svg>
+        </div>
+      </div> -->

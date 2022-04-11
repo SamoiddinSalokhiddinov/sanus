@@ -1,0 +1,237 @@
+{% extends '../layout/layout.html' %}
+{% load static i18n %}
+
+{% block title %}
+{% trans 'Admittance' %}
+{% endblock %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet"
+  href="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/formvalidation/dist/css/formValidation.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/select2/select2.css' %}" />
+
+
+{% endblock %}
+{% block body %}
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h6 class="breadcrumb-wrapper py-3 mb-4">
+      <span class="text-muted fw-light">{% trans 'Admittance' %} /</span>
+      <span>Dr {{data.doctor}} {{data.doctor.surname}} :
+        {% trans 'Patient' %} {{data.patient}} {{data.patient.surname}} </span>
+    </h6>
+
+
+    <form method="POST" class="needs-validation" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ formset.management_form }}
+      <div class="card mb-4">
+        <h3 class="card-header text-center">
+          <div>{% trans 'Admittance' %}</div>
+
+        </h3>
+        <div class="card-body">
+          <form method="POST" class="needs-validation" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <div class="card">
+              <div class="card-header text-center text-dark fw-bold">
+                <h6>{% trans 'Admittance Form' %}</h6>
+              </div>
+              <div class="card-body">
+                {% csrf_token %}
+                {{ formset.management_form }}
+                <div class="data_hours_gr ">
+                  <h6 class="text-muted fw-normal">1. {% trans 'Date and Hours' %}</h6>
+                  <div class="row ">
+                    <div class="col-md-6">
+                      <label for="" class="form-label">{{ form.date.label }}</label>
+                      {{ form.date }}
+                      <p class="text-danger">
+                        {{ form.date.errors.as_text }}
+                      </p>
+                    </div>
+
+                    <div class="col-md-6">
+
+                      <label for="" class="form-label">{{ form.start_hour.label }}</label>
+                      {{ form.start_hour }}
+                      <p class="text-danger">
+                        {{ form.start_hour.errors.as_text }}
+                      </p>
+                    </div>
+
+                    <div class="col-md-6">
+
+                      <label for="" class="form-label">{{ form.end_hour.label }}</label>
+                      {{ form.end_hour }}
+                      <p class="text-danger">
+                        {{ form.end_hour.errors.as_text }}
+                      </p>
+                    </div>
+
+                    <div class="col-md-6">
+
+                      <label for="" class="form-label">{{ form.admittance_type.label }}</label>
+                      {{ form.admittance_type }}
+                      <p class="text-danger">
+                        {{ form.admittance_type.errors.as_text }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dr_patients_gr ">
+                  <hr class="mx-n4 my-4">
+                  <div class="row ">
+                    <h6 class="text-muted fw-normal">1. {% trans 'Doctor and Patient' %}</h6>
+                    <div class="col-md-6">
+
+                      <label for="" class="form-label">{{ form.doctor.label }}</label>
+                      {{ form.doctor }}
+                      <p class="text-danger">
+                        {{ form.doctor.errors.as_text }}
+                      </p>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for="" class="form-label">{{ form.patient.label }}</label>
+                      {{ form.patient }}
+                      <p class="text-danger">
+                        {{ form.patient.errors.as_text }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="symp_status_gr">
+                  <div class="row">
+                    <h6 class="text-muted fw-normal">1. {% trans 'Symptoms and Status' %}</h6>
+                    <div class="col-md-6">
+
+                      <label for="" class="form-label">{{ form.symptoms.label }}</label>
+                      {{ form.symptoms }}
+                      <p class="text-danger">
+                        {{ form.symptoms.errors.as_text }}
+                      </p>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for="" class="form-label">{{ form.status.label }}</label>
+                      {{ form.status }}
+                      <p class="text-danger">
+                        {{ form.status.errors.as_text }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="diagnosis_gr">
+                  <hr class="mx-n4 my-4">
+                  <div class="row">
+                    <h6 class="text-muted fw-normal">2. {% trans 'Diagnosis' %}</h6>
+
+                    <div class="col-md-6">
+
+                      <label for="" class="form-label">{{ form.diagnosis.label }}</label>
+                      {{ form.diagnosis }}
+                      <p class="text-danger">
+                        {{ form.diagnosis.errors.as_text }}
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="file_gr">
+                  <hr class="mx-n4 my-4">
+                  <div class="row">
+                    <h6 class="text-muted fw-normal">3. {% trans 'Extra file' %}</h6>
+
+                    <div class="col-md-6">
+
+                      <label for="" class="form-label">{{ form.extra_file.label }}</label>
+                      {{ form.extra_file }}
+                      <p class="text-danger">
+                        {{ form.extra_file.errors.as_text }}
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+                <!-- <div class="row center g-3">
+                  {% for field in form %}
+                  <div class="col-md-6 col-12 mt-2">
+                    <label class="form-label" for="multicol-first-name">{{ field.label }}</label>
+                    {{ field }}
+                    {{ field.errors }}
+                  </div>
+                  {% endfor %}
+                </div> -->
+                <div class="invoice-action-btn mt-2 mb-1">
+                  <button type="submit" class="btn btn-primary btn-block invoice-send-btn">
+                    <i class="bx bxs-save"></i>
+                    <span>{% trans 'Saqlash' %}</span>
+                  </button>
+                  <button type="reset" class="btn btn-label-secondary">Cancel</button>
+                </div>
+
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>
+  <!-- / Content -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<!-- AutoFocus plugin, automatically focus on the first invalid input  -->
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script>
+
+<script>
+  let form_count = Number($("[name=extra_field_count]").val());
+  // get extra form count so we know what index to use for the next item.
+
+  $("#add-another").click(function () {
+    form_count++;
+
+    let element = $('<input type="text"/>');
+    element.attr('name', 'extra_field_' + form_count);
+    $("#forms").append(element);
+    // build element and append it to our forms container
+
+    $("[name=extra_field_count]").val(form_count);
+    // increment form count so our view knows to populate 
+    // that many fields for validation
+  })
+</script>
+<script>
+  $(document).ready(function () {
+    $(".select2").select2();
+  })
+</script>
+{% endblock %}

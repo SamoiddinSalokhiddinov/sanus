@@ -1,0 +1,118 @@
+{% extends '../layout/layout.html' %}
+{% load static i18n %}
+
+{% block title %}
+{% trans 'Application Form of Department' %}
+{% endblock %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet"
+  href="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/formvalidation/dist/css/formValidation.css' %}" />
+
+
+{% endblock %}
+{% block body %}
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h6 class="breadcrumb-wrapper py-3 mb-4">
+      <span class="text-muted fw-light">{% trans 'Departments' %} /</span> {{ department.title }}
+    </h6>
+
+    <div class="page-header">
+      <h2 class="text-dark text-center">{% trans 'Department' %} :{{ department.title }} </h2>
+    </div>
+
+    <div class="card mb-4">
+      <h5 class="card-header ">{% trans 'Details' %} </h5>
+      <div class="card-body">
+
+        <div class="row ">
+          <div class="col-md-12">
+            <label for="" class="form-label">{% trans 'Title' %}</label>
+            <input class="form-control" type="text" id="" placeholder="{{ department.title }}" readonly />
+          </div>
+          <div class="col-md-12">
+            <label for="" class="form-label">{% trans 'hospital' %}</label>
+            <input class="form-control" type="text" id="" placeholder="{{ department.hospital }}" readonly />
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <h5 class="card-header ">{% trans 'Specialities' %}</h5>
+      <div class="card-body">
+
+        {% for speciality in specialities %}
+        <h5>
+          <a href="{% url 'speciality:single' speciality.id %}" class="text-secondary ">
+            {{ forloop.counter }} . {{ speciality.title }}
+          </a>
+        </h5>
+
+        {% for doctor in speciality.doctors %}
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th>{% trans 'Card ID' %}</th>
+                <th>{% trans 'Full Name' %}</th>
+                <th>{% trans 'Department' %}</th>
+                <th>{% trans 'Role' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <a href="{% url 'doctor:single' doctor.id %}">
+                    <span class=" badge bg-label-info me-1">#{{ doctor.id }}</span>
+                  </a>
+                </td>
+                <td>
+                  <a href="{% url 'doctor:single' doctor.id %}">
+                    {{doctor.name}}
+                    {{doctor.middle_name}}
+                    {{doctor.surname}}
+                  </a>
+                </td>
+                <td>{{ doctor.department }}</td>
+                <td>{{ doctor.post_verbose }}</td>
+              </tr>
+
+
+
+            </tbody>
+          </table>
+        </div>
+        {% endfor %}
+
+
+        {% endfor %}
+
+      </div>
+    </div>
+
+
+  </div>
+  <!-- / Content -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<!-- AutoFocus plugin, automatically focus on the first invalid input  -->
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+
+{% endblock %}

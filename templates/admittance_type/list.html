@@ -1,0 +1,203 @@
+{% extends '../layout/layout.html' %}
+
+{% load static i18n %}
+{% block title %}{% trans "List of Admittance Type" %} {% endblock %}
+
+{% block css %}
+
+
+
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet"
+  href="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+{% endblock %} {% block body %}
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h6 class="breadcrumb-wrapper py-3 mb-4">
+      <span class="text-muted fw-light">{% trans 'Admittance Type' %} /</span> {% trans 'List of Admittance Type' %}
+    </h6>
+
+    {% if messages %} {% for message in messages %}
+    <div class="row justify-content-center mt-2">
+      <div class="col-12">
+        <div class="alert alert-success alert-dismissible modalAlert" role="alert">
+          <div>
+            <i class="bx bx-like"></i>
+            <span class="d-inline-block ml-3">{{ message }}</span>
+          </div>
+          <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% endif %}
+    <h2 class="text-dark text-center">{% trans 'List of Admittance Type' %}</h2>
+
+    <div class="card">
+      <div class="card-datatable table-responsive pt-0 px-4">
+        <table class="datatables-basic table table-bordered" id="app_form_table">
+          <thead>
+            <tr>
+              <th>{% trans 'Doctor' %}</th>
+              <th>{% trans 'Title' %}</th>
+              <th>{% trans 'Duration' %}</th>
+              <th>{% trans 'Action' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for admittance in admittances %}
+            <tr>
+              <td>
+                {{ admittance.doctor }}
+              </td>
+              <td>
+                {{ admittance.title }}
+              </td>
+              <td>{{ admittance.duration }} {% trans 'min' %} </td>
+              <td>
+                <div class="d-flex align-items-center">
+
+                  <a href="{% url 'admittance:type_update' admittance.id %}" data-bs-toggle="tooltip" class="text-body"
+                    data-bs-placement="top" title="" data-bs-original-title="{% trans 'Edit' %}"
+                    aria-label="{% trans 'Edit' %}">
+                    <i class="bx bx-tada-hover text-info bxs-edit-alt mx-1"></i>
+                  </a>
+
+                  <a href="#" class="text-body modalDelete_caller"
+                    data-url="{% url 'admittance:type_delete' admittance.id %}" data-bs-toggle="modal"
+                    data-bs-target="#basicModal" data-bs-original-title="{% trans 'Delete' %}"
+                    aria-label="{% trans 'Delete' %}">
+                    <i class="bx bx-trash bx-tada-hover text-danger mx-1"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- / Content -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock body %}
+{% block js %}
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/datatables-responsive/datatables.responsive.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/datatables-buttons/datatables-buttons.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/jszip/jszip.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/pdfmake/pdfmake.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/datatables-buttons/buttons.html5.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/datatables-buttons/buttons.print.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    $(".modalAlert")
+      .fadeTo(2000, 500)
+      .slideUp(500, function () {
+        $(".modalAlert").slideUp(500);
+      });
+    $(".modalDelete_caller").click(function () {
+      url = $(this).data("url");
+      $("#modalDelete").attr("href", url);
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $("#app_form_table").DataTable({
+      language: {
+        decimal: "",
+        emptyTable: "{% trans 'No data available in table' %}",
+        info: "{% trans 'Showing _START_ to _END_ of _TOTAL_ entries' %}",
+        infoEmpty: "{% trans 'Showing 0 to 0 of 0 entries' %}",
+        infoFiltered: "{% trans '(filtered from _MAX_ total entries)' %}",
+        infoPostFix: "",
+        thousands: ",",
+        lengthMenu: "{% trans 'Show _MENU_ entries' %}",
+        loadingRecords: "{% trans 'Loading...' %}",
+        processing: "{% trans 'Processing...' %}",
+        search: "{% trans 'Search:' %}",
+        zeroRecords: "{% trans 'No matching records found' %}",
+        paginate: {
+          first: "{% trans 'First' %}",
+          last: "{% trans 'Last' %}",
+          next: "{% trans 'Next' %}",
+          previous: "{% trans 'Previous' %}",
+        },
+        aria: {
+          sortAscending: "{% trans ': activate to sort column ascending' %}",
+          sortDescending: "{% trans ': activate to sort column descending' %}",
+        },
+      },
+      // oLanguage: {
+      //   "sLengthMenu": "{% trans 'Display' %} _MENU_ {% trans 'records' %}",
+      //   "sSearch" : "{% trans 'Search' %}",
+      //   "oLanguage.sZeroRecords" : "{% trans 'No matching records sfound' %}"
+      // },
+      // dom:
+      // '<"card-header"<"head-label text-center"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      dom: '<"row ms-2 me-3"' +
+        '<"col-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3">>' +
+        '<"col-12 col-md-8 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-2"f<"invoice_status mb-3 mb-md-0"B>>' +
+        ">t" +
+        '<"row mx-2"' +
+        '<"col-sm-12 col-md-6"i>' +
+        '<"col-sm-12 col-md-6"p>' +
+        ">",
+      displayLength: 7,
+      lengthMenu: [1, 7, 10, 25, 50, 75, 100],
+      buttons: [{
+        extend: "collection",
+        className: "btn btn-label-primary dropdown-toggle me-2",
+        text: '<i class="bx bx-tada-hover bx-download me-2"></i>{% trans "Export" %}',
+        buttons: [{
+          extend: "print",
+          text: '<i class="bx bx-tada-hover bx-printer me-2" ></i>{% trans "Print" %}',
+          className: "dropdown-item",
+        },
+        {
+          extend: "csv",
+          text: '<i class="bx bx-tada-hover bx-file me-2" ></i>Csv',
+          className: "dropdown-item",
+        },
+        {
+          extend: "excel",
+          text: "Excel",
+          className: "dropdown-item",
+        },
+        {
+          extend: "pdf",
+          text: '<i class="bx bx-tada-hover bxs-file-pdf me-2"></i>Pdf',
+          className: "dropdown-item",
+        },
+        {
+          extend: "copy",
+          text: '<i class="bx bx-tada-hover bx-copy me-2" ></i>{% trans "Copy" %}',
+          className: "dropdown-item",
+        },
+        ],
+      },
+      {
+        text: '<i class="bx bx-tada-hover bx-plus me-md-2"></i><span class="d-md-inline-block d-none">{% trans "Add doctor" %}</span>',
+        className: "btn btn-primary",
+        action: function (e, dt, button, config) {
+          window.location = '{% url "admittance:type_add" %}';
+        },
+      },
+      ],
+    });
+  });
+</script>
+{% endblock %}

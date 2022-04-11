@@ -1,0 +1,9 @@
+django-nested-admin==3.4.0
+Django==4.0.3
+djangorestframework==3.13.1
+django-resized==0.3.11
+psycopg2-binary==2.9.3
+Pillow==9.1.0
+django-image-optimizer==1.0.1
+django-seed==0.3.1
+django_ckeditor==6.3.2

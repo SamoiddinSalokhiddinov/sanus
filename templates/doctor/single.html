@@ -1,0 +1,546 @@
+{% extends '../layout/layout.html' %}
+{% load static i18n %}
+
+{% block title %}
+{% trans 'List of Doctors' %}
+{% endblock %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet"
+  href="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/formvalidation/dist/css/formValidation.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/fullcalendar/fullcalendar.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/flatpickr/flatpickr.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/select2/select2.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/editor.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/css/pages/app-calendar.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-profile.css' %}" />
+
+
+{% endblock %}
+{% block body %}
+<div class="content-wrapper">
+  <!-- Content -->
+
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h6 class="breadcrumb-wrapper py-3 mb-4">
+      <span class="text-muted fw-light"> {% trans 'Doctors' %} / </span>
+      Dr {{ doctor.name }} {{ doctor.middle_name }} {{ doctor.surname }}
+    </h6>
+
+    <div class="user_profile">
+      <!-- Header -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="user-profile-header-banner">
+              <img src="{% static 'assets/img/pages/profile-banner.png' %}" alt="Banner image" class="rounded-top" />
+            </div>
+            <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
+              <div class="mt-n2 flex-shrink-0 mx-auto mx-sm-0">
+                <img src="{% static 'assets/img/avatars/1.png' %}" alt="user image"
+                  class="rounded-3 user-profile-img d-block h-auto ms-0 ms-sm-4" />
+              </div>
+              <div class="flex-grow-1 mt-3 mt-sm-5">
+                <div
+                  class="gap-4 d-flex flex-column flex-md-row justify-content-start justify-content-md-between align-items-center align-items-sm-start align-items-md-end mx-4">
+                  <div class="user-profile-info">
+                    <h4>{{ doctor.name }} {{ doctor.middle_name }} {{ doctor.surname }}</h4>
+                    <ul
+                      class="list-inline gap-2 d-flex flex-wrap justify-content-center justify-content-sm-start align-items-center mb-0">
+                      <li class="list-inline-item fw-semibold">
+                        <i class="bx bx-clinic"></i>
+                        {% trans 'Speciality' %} : {{ doctor.speciality}}
+                      </li>
+                      <li class="list-inline-item fw-semibold">
+                        <i class='bx bxs-buildings'></i>
+                        {% trans 'Department' %} : {{ doctor.department }}
+                      </li>
+
+                      <li class="list-inline-item fw-semibold">
+                        <i class="bx bx-category"></i>
+                        {% trans 'Role' %} : {{ doctor.post_verbose }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Header -->
+
+      <!-- Navbar pills -->
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <ul class="nav nav-pills flex-column flex-sm-row mb-4">
+            <li class="nav-item">
+              <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user"></i> Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages-profile-teams.html"><i class="bx bx-group"></i> Teams</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages-profile-projects.html"><i class="bx bx-grid-alt"></i> Projects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages-profile-connections.html"><i class="bx bx-link-alt"></i> Connections</a>
+            </li>
+          </ul>
+        </div>
+      </div> -->
+      <!--/ Navbar pills -->
+
+      <!-- User Profile Content -->
+      <div class="row">
+        <div class="col-md-5 col-lg-5 col-xl-4">
+          <!-- About User -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <small class="text-muted text-uppercase">{% trans 'About' %}</small>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li class="d-flex align-items-center mb-3">
+                  <i class="bx bx-user"></i><span class="fw-semibold mx-2">{% trans 'Full Name' %} : </span>
+                  <span>{{ doctor.name }} {{ doctor.middle_name }} {{ doctor.surname }}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class="bx bx-clinic"></i>
+                  <span class="fw-semibold mx-2">{% trans 'Speciality' %} : </span>
+                  <span>{{ doctor.speciality}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class='bx bxs-buildings'></i>
+                  <span class="fw-semibold mx-2">{% trans 'Department' %} : </span>
+                  <span>{{ doctor.department }}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class="bx bx-category"></i>
+                  <span class="fw-semibold mx-2">{% trans 'Role' %} : </span>
+                  <span>{{ doctor.post_verbose }}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class='bx bx-grid-vertical'></i>
+                  <span class="fw-semibold mx-2">{% trans 'Floor' %} : </span>
+                  {{ doctor.floor.floor }}
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class='bx bx-exit'></i>
+                  <span class="fw-semibold mx-2">{% trans 'Room' %} : </span>
+                  {{ doctor.room.room }}
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class='bx bxs-calendar-star'></i>
+                  <span class="fw-semibold mx-2">{% trans 'Birthday' %} : </span>
+                  <span>{{ doctor.birthday }}</span>
+                </li>
+              </ul>
+
+              <small class="text-muted text-uppercase">{% trans 'Contacts' %}</small>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li class="d-flex align-items-center mb-3">
+                  <i class="bx bx-phone"></i><span class="fw-semibold mx-2">{% trans 'Phone ' %}:</span>
+                  <span>{{ doctor.phone }}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class="bx bx-phone"></i><span class="fw-semibold mx-2">{% trans 'Phone 2' %}:</span>
+                  <span>{{ doctor.phone2 }}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class="bx bx-envelope"></i><span class="fw-semibold mx-2">{% trans 'Email' %} :</span>
+                  {% if doctor.email %}
+                  <span style="overflow: hidden;">{{ doctor.email}}</span>
+                  {% else %}
+                  <span>{% trans 'Not added' %}</span>
+                  {% endif %}
+
+                </li>
+              </ul>
+
+            </div>
+          </div>
+          <!--/ About User -->
+          <!-- Profile Overview -->
+          <!--    <div class="card mb-4">
+            <div class="card-body">
+              <small class="text-muted text-uppercase">Overview</small>
+              <ul class="list-unstyled mt-3 mb-0">
+                <li class="d-flex align-items-center mb-3">
+                  <i class="bx bx-check"></i><span class="fw-semibold mx-2">Task Compiled:</span>
+                  <span>13.5k</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                  <i class="bx bx-customize"></i><span class="fw-semibold mx-2">Projects Compiled:</span>
+                  <span>146</span>
+                </li>
+                <li class="d-flex align-items-center">
+                  <i class="bx bx-user"></i><span class="fw-semibold mx-2">Connections:</span> <span>897</span>
+                </li>
+              </ul>
+            </div>
+          </div> -->
+          <!--/ Profile Overview -->
+        </div>
+        <div class="col-md-7 col-lg-7 col-xl-8">
+          <!-- Activity Timeline -->
+          <div class="card card-action mb-4">
+            <div class="card-header align-items-center">
+              <h5 class="card-action-title mb-0"><i class="bx bx-list-ul bx-sm me-2"></i>{% trans 'Patients Today' %}
+                {{ admittances.date }}
+              </h5>
+
+            </div>
+            <div class="card-body">
+              <ul class="timeline ms-2">
+                {% for admittance in admittances %}
+                {% if admittance.status == "admitted" %}
+                <li class="timeline-item timeline-item-success mt-2">
+                  <span class="timeline-point timeline-point-success"></span>
+                  {% elif admittance.status == "admitting" %}
+                <li class="timeline-item timeline-item-info mt-2">
+                  <span class="timeline-point timeline-point-info"></span>
+                  {% else %}
+                <li class="timeline-item timeline-item-transparent mt-2">
+                  <span class="timeline-point timeline-point-warning"></span>
+                  {% endif %}
+                  <div class="timeline-event">
+                    <div class="timeline-header mb-1">
+                      <div class="d-flex flex-wrap timeline-box-wrapper">
+                        <div class="avatar me-2">
+                          <img src="{% static 'assets/img/avatars/3.png' %}" alt="Avatar" class="rounded-circle" />
+                        </div>
+                        <div class="timeline_patient">
+                          <h6 class="mb-0">
+                            <a href="#">
+                              {{ admittance.patient.name}}
+                              {{admittance.patient.middle_name}}
+                              {{admittance.patient.surname}}
+                            </a>
+                            <p>{{ admittance.patient.birthday }}</p>
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="admittance_info">
+                      <div class="row">
+                        <div class="col-md-4 col-lg-4 col-12">
+                          {% if admittance.status == "admitted" %}
+                          <span class="badge bg-success">{% trans 'Status' %} : {{admittance.status}} </span>
+                          {% elif admittance.status == "admitting" %}
+                          <span class="badge bg-info">{% trans 'Status' %} : {{admittance.status}} </span>
+                          {% else %}
+                          <span class="badge bg-warning">{% trans 'Status' %} : {{admittance.status}} </span>
+                          {% endif %}
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-12">
+                          <span class="text-muted">{% trans 'Start Hour' %} : {{ admittance.start_hour }} </span>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-12">
+                          <span class="text-muted">{% trans 'End Hour' %} : {{ admittance.end_hour }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!--/ User Profile Content -->
+    </div>
+
+
+    <div class="row mb-5">
+      <div class="card app-calendar-wrapper">
+        <div class="row g-0">
+          <!-- Calendar Sidebar -->
+          <div class="app-calendar-sidebar col" id="app-calendar-sidebar">
+            <div class="border-bottom p-4 my-sm-0 mb-3">
+              <div class="d-grid">
+                <button class="btn btn-primary btn-toggle-sidebar" data-bs-toggle="offcanvas"
+                  data-bs-target="#addEventSidebar" aria-controls="addEventSidebar">
+                  <i class="bx bx-plus"></i>
+                  <span class="align-middle">Add Event</span>
+                </button>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="ms-n2">
+                <div class="inline-calendar"></div>
+              </div>
+
+              <hr class="container-m-nx my-4" />
+
+              <!-- Filter -->
+              <div class="mb-4">
+                <small class="text-small text-muted text-uppercase align-middle">Filter</small>
+              </div>
+
+              <div class="form-check mb-2">
+                <input class="form-check-input select-all filter_input" type="checkbox" id="selectAll"
+                  data-value="all" />
+                <label class="form-check-label" for="selectAll">View All</label>
+              </div>
+
+              <div class="app-calendar-events-filter">
+                {% for data in admittance_types %}
+                <div class="form-check form-check-{{ data.color_class }} mb-2">
+
+                  <input class="form-check-input input-filter filter_input" type="checkbox"
+                    id="select-{{ data.color_class }}" data-value="{{ data.title|lower }}" />
+                  <label class="form-check-label" for="select-{{ data.color_class }}">{{ data.title }}</label>
+                </div>
+                {% endfor %}
+
+              </div>
+            </div>
+          </div>
+          <!-- /Calendar Sidebar -->
+
+          <!-- Calendar & Modal -->
+          <div class="app-calendar-content col">
+            <div class="card shadow-none border-0">
+              <div class="card-body pb-0">
+                <!-- FullCalendar -->
+                <div id="calendar"></div>
+              </div>
+            </div>
+            <div class="app-overlay"></div>
+            <!-- FullCalendar Offcanvas -->
+            <div class="offcanvas offcanvas-end event-sidebar" tabindex="-1" id="addEventSidebar"
+              aria-labelledby="addEventSidebarLabel">
+              <div class="offcanvas-header border-bottom">
+                <h6 class="offcanvas-title" id="addEventSidebarLabel">Add Event</h6>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                  aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+
+                <form method="POST" class="event-form pt-0" id="eventForm" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ formset.management_form }}
+                  {% for field in form %}
+                  <div class="mb-3">
+                    <label class="form-label" for="multicol-first-name">{{ field.label }}</label>
+                    {{ field }}
+                    {{ field.errors }}
+                  </div>
+                  {% endfor %}
+
+
+                  <div class="d-flex justify-content-start justify-content-sm-between my-4 mb-3">
+                    <div>
+                      <button type="sub" class="btn btn-primary btn-add-event me-1 me-sm-3 d-none">
+                        <i class="bx bxs-save"></i>
+                        <span>{% trans 'Saqlash' %}</span>
+                      </button>
+                      <button type="reset" class="btn btn-primary btn-update-event d-none me-1 me-sm-3">
+                        Update
+                      </button>
+                      <button type="reset" class="btn btn-label-secondary btn-cancel me-1 me-sm-0"
+                        data-bs-dismiss="offcanvas">
+                        {% trans 'Cancel' %}
+                      </button>
+                    </div>
+                    <div><button class="btn btn-label-danger btn-delete-event d-none">Delete</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'assets/vendor/libs/fullcalendar/fullcalendar.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<!-- AutoFocus plugin, automatically focus on the first invalid input  -->
+
+<script src="{% static 'assets/vendor/libs/flatpickr/flatpickr.js' %}"></script>
+<!-- <script src="{% static 'assets/vendor/libs/moment/moment.js' %}"></script> -->
+
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+<!-- <script src="{% static 'assets/js/app-calendar-events.js' %}"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+<script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script>
+<script src="{% static 'assets/js/app-calendar.js' %}"></script>
+
+<script defer>
+  $(document).ready(function () {
+
+    // GET PATIENT FROM API
+    $(".patient_select").select2({
+      placeholder: '{% trans "Select Patient" %}',
+      dropdownParent: $('#eventForm'),
+      ajax: {
+        url: function (params) {
+          return "{% url 'patient_list' %}" + "?search=" + params.term;
+        },
+        dataType: 'json',
+        delay: 250,
+        processResults: function (data) {
+          // Transforms the top-level key of the response object from 'items' to 'results'
+          return {
+            results: $.map(data, function (item) {
+              return {
+                id: item.id,
+                value: item.id,
+                text: "#" + item.card_id + " " + item.name + " " + item.surname + " " + item.birthday
+              };
+            })
+          };
+        },
+      }
+    })
+
+  })
+
+</script>
+<script>
+  'use strict';
+  //$('.spinner_box').removeClass("d-none")
+  let calendarsColor = {}
+  let businessHours = [
+
+    {
+      daysOfWeek: [1],
+      startTime: $("#monday_start").attr("data_value"),
+      endTime: $("#monday_end").attr("data_value")
+    },
+    {
+      daysOfWeek: [2],
+      startTime: $("#tuesday_start").attr("data_value"),
+      endTime: $("#tuesday_end").attr("data_value")
+    },
+    {
+      daysOfWeek: [3],
+      startTime: $("#wednesday_start").attr("data_value"),
+      endTime: $("#wednesday_end").attr("data_value")
+    },
+    {
+      daysOfWeek: [4],
+      startTime: $("#thursday_start").attr("data_value"),
+      endTime: $("#thursday_end").attr("data_value")
+    },
+    {
+      daysOfWeek: [5],
+      startTime: $("#friday_start").attr("data_value"),
+      endTime: $("#friday_end").attr("data_value")
+    },
+    {
+      daysOfWeek: [6],
+      startTime: $("#saturday_start").attr("data_value"),
+      endTime: $("#saturday_end").attr("data_value")
+    },
+    {
+      daysOfWeek: [7],
+      startTime: $("#sunday_start").attr("data_value"),
+      endTime: $("#sunday_end").attr("data_value")
+    },
+  ]
+
+  let events = []
+
+  let rad0 = []
+
+
+  $(document).ready(function () {
+
+    $.ajax({
+      url: "{% url 'doctor_detail' doctor.id %}",
+      dataType: "json",
+      success: function (data) {
+        // let calendarsColor = data.admittance_type_doctor
+        let admittances = data.admittance_doctor
+        if (admittances.length) {
+          $(admittances).each(function (index, admittance) {
+            // CALENDAR STYLING 
+            let type = admittance.ad_type_title
+            let color = admittance.ad_type_color
+            let color_class = admittance.ad_type_color_class
+            calendarsColor[type] = color_class
+
+            // INIT DATA
+            let id = admittance.id
+            let date = admittance.date
+            let start_hour = admittance.start_hour
+            let end_hour = admittance.end_hour
+            let patient = admittance.patient_name
+
+            events.push(
+              {
+                url: "{% url 'admittance:list' %}",
+                title: patient,
+                start: date + 'T' + start_hour,
+                end: date + 'T' + end_hour,
+                color: color,
+                extendedProps: {
+                  calendar: type
+                }
+              })
+
+
+          })
+
+          $('.filter_input').prop('checked', true);
+          $('.filter_input').trigger('click');
+          $('.filter_input').attr('checked', true);
+        } else {
+          // EMPTY ARRAY
+        }
+
+      },
+      error: function (xhr, exception) {
+        var msg = "";
+        if (xhr.status === 0) {
+          msg = "Not connect.\n Verify Network." + xhr.responseText;
+        } else if (xhr.status == 404) {
+          msg = "Requested page not found. [404]" + xhr.responseText;
+        } else if (xhr.status == 500) {
+          msg = "Internal Server Error [500]." + xhr.responseText;
+        } else if (exception === "parsererror") {
+          msg = "Requested JSON parse failed.";
+        } else if (exception === "timeout") {
+          msg = "Time out error." + xhr.responseText;
+        } else if (exception === "abort") {
+          msg = "Ajax request aborted.";
+        } else {
+          msg = "Error:" + xhr.status + " " + xhr.responseText;
+        }
+      },
+      complete: function () {
+        $('.spinner_box').addClass("d-none")
+      }
+    })
+
+
+  })
+
+</script>
+
+{% endblock %}

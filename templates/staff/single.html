@@ -1,0 +1,143 @@
+{% extends '../layout/layout.html' %}
+{% load static i18n %}
+
+{% block title %}
+{% trans 'Staff' %} : {{ staff.name }} {{ staff.surname }}
+{% endblock %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet"
+  href="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/formvalidation/dist/css/formValidation.css' %}" />
+
+
+{% endblock %}
+{% block body %}
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h6 class="breadcrumb-wrapper py-3 mb-4">
+      <span class="text-muted fw-light"> {% trans 'Staff' %} / {% trans 'List Staff' %} /</span>
+      {% trans 'Staff' %} : {{ staff.name }} {{ staff.surname }}
+    </h6>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <h5 class="card-header">{% trans 'Staff Details' %}</h5>
+          <!-- Account -->
+          <div class="card-body">
+            <div class="gap-4 d-flex align-items-start align-items-sm-center">
+              <img src="{% static 'assets/img/avatars/1.png' %}" alt="user-avatar" class="d-block rounded" height="100"
+                width="100" id="uploadedAvatar" />
+              <div class="patient-single">
+                <div class="p-1">
+                  <span class="text-dark fw-bold">{% trans 'Name' %} :</span> {{ staff.name }}
+                </div>
+                <div class="p-1">
+                  <span class="text-dark fw-bold">{% trans 'Middle Name' %} :</span> {{ staff.middle_name }}
+                </div>
+                <div class="p-1">
+                  <span class="text-dark fw-bold">{% trans 'Surname' %} :</span> {{ staff.surname }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-0" />
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label">{% trans 'Name' %}</label>
+                <input class="form-control" type="text" id="firstName" placeholder="{{ staff.name }}" readonly />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="midName" class="form-label">{% trans 'Middle Name' %}</label>
+                <input class="form-control" type="text" id="midName" placeholder="{{ staff.middle_name }}" readonly />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="surname" class="form-label">{% trans 'Surname' %}</label>
+                <input class="form-control" type="text" id="surname" placeholder="{{ staff.surname }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">{% trans 'Email' %}</label>
+                <input class="form-control" type="text" id="surname" placeholder="{{ staff.email }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label">{% trans 'Phone' %}</label>
+                <input class="form-control" type="text" id="phone" placeholder="{{ staff.phone }}" readonly />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="phone2" class="form-label">{% trans 'Phone 2' %}</label>
+                <input class="form-control" type="text" id="phone2" placeholder="{{ staff.phone2 }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="birthday" class="form-label">{% trans 'Birthday' %}</label>
+                <input class="form-control" type="text" id="birthday" value="{{ staff.birthday }}"
+                  placeholder="{{ staff.birthday }}" readonly />
+              </div>
+
+
+              <div class="col-md-6 mb-3">
+                <label for="department" class="form-label">{% trans 'Department' %}</label>
+                <input class="form-control" type="text" id="department" placeholder="{{ staff.department }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="post" class="form-label">{% trans 'Role' %}</label>
+                <input class="form-control" type="text" id="post" placeholder="{{ staff.post }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="gender" class="form-label">{% trans 'Gender' %}</label>
+                <input class="form-control" type="text" id="gender" placeholder="{{ staff.gender_verbose }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label">{% trans 'City / Region' %}</label>
+                <input class="form-control" type="text" id="city" placeholder="{{ staff.city }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="district" class="form-label">{% trans 'District' %}</label>
+                <input class="form-control" type="text" id="district" placeholder="{{ staff.district }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="floor" class="form-label">{% trans 'Floor' %}</label>
+                <input class="form-control" type="text" id="floor" placeholder="{{ staff.floor }}" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="room" class="form-label">{% trans 'Room' %}</label>
+                <input class="form-control" type="text" id="room" placeholder="{{ staff.room }}" readonly />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- / Content -->
+
+
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<!-- AutoFocus plugin, automatically focus on the first invalid input  -->
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+
+{% endblock %}

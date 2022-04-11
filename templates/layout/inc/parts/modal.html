@@ -1,0 +1,22 @@
+{% load static i18n %}
+
+<div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel1">{% trans 'Sanus' %}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 class="text-center">{% trans "Ushbu ma'lumot o'chirilishini tasdiqlaysizmi?" %}</h3>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-label-primary" data-bs-dismiss="modal">{% trans "Yo'q" %}</button>
+            <a href="#" class="text-body btn btn-danger p-2 rounded" id="modalDelete" data-bs-original-title="{% trans 'Delete' %}" aria-label="{% trans 'Delete' %}">
+                <i class="bx bx-trash bx-tada-hover text-white "></i>
+                <span class="d-md-inline-block text-white">{% trans 'Ha' %}</span>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>

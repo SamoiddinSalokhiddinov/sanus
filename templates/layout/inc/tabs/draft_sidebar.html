@@ -1,0 +1,333 @@
+<ul class="menu-inner py-1">
+
+    <!-- Schedule -->
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">{% trans 'Schedule' %}</span>
+    </li>
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: calendar"></i>
+            <div>{% trans 'Schedule' %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: grid"></i>
+                    <div>{% trans 'Admittance Type' %}</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-sub-item ml-2">
+                        <a href="{% url 'admittance:type_list' %}" class="menu-link">
+                            <i class="rad0-sub-livicon-i sub-child-icon menu-icon tf-icons ml-2"
+                                data-options="name: list;"></i>
+                            <div class="rad0-livicon-subicon-name ml- 2">{% trans "List Admittance Type" %}</div>
+                        </a>
+                    </li>
+                    <li class="menu-sub-item ml-2">
+                        <a href="{% url 'admittance:type_add' %}" class="menu-link">
+                            <i class="rad0-sub-livicon-i sub-child-icon menu-icon tf-icons ml-2"
+                                data-options="name: plus"></i>
+                            <div class="rad0-livicon-subicon-name ml- 2">{% trans "Add Admittance Type" %}</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: notebook"></i>
+                    <div>{% trans 'Admittance ' %}</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-sub-item ml-2">
+                        <a href="{% url 'admittance:list' %}" class="menu-link">
+                            <i class="rad0-sub-livicon-i sub-child-icon menu-icon tf-icons ml-2"
+                                data-options="name: list;"></i>
+                            <div class="rad0-livicon-subicon-name ml- 2">{% trans "List Admittance " %}</div>
+                        </a>
+                    </li>
+                    <li class="menu-sub-item ml-2">
+                        <a href="{% url 'admittance:add' %}" class="menu-link">
+                            <i class="rad0-sub-livicon-i sub-child-icon menu-icon tf-icons ml-2"
+                                data-options="name: plus"></i>
+                            <div class="rad0-livicon-subicon-name ml- 2">{% trans "Add Admittance " %}</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </li>
+    <!-- End Schedule -->
+
+    <!-- Doctors and Staff -->
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">{% trans 'Doctors' %} &amp; {% trans 'Staff' %}</span>
+    </li>
+
+    <li class="menu-item open active">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: user"></i>
+            <div class="rad0-livicon-icon-name">{% trans "Doctors" %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'doctor:list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Doctors" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item active">
+                <a href="{% url 'doctor:add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Doctor" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="menu-item  ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: wind"></i>
+            <div class="rad0-livicon-icon-name">{% trans "Nurses / Orderly " %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'nurse:list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Nurses / Orderly" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item ">
+                <a href="{% url 'nurse:add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Nurse / Orderly" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="menu-item  ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: diagram"></i>
+            <div class="rad0-livicon-icon-name">{% trans "Staff" %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'staff:list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Staff" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item ">
+                <a href="{% url 'staff:add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Staff" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- End Doctors and Staff -->
+
+
+    <!-- Patients and Admittance -->
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">{% trans 'Patients' %} &amp; {% trans 'Admittances' %}</span>
+    </li>
+
+    <li class="menu-item  ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: users"></i>
+            <div class="rad0-livicon-icon-name">{% trans "Patients" %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'patient:list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Patients" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item ">
+                <a href="{% url 'patient:add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Patient" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="menu-item  ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: notebook"></i>
+            <div class="rad0-livicon-icon-name">{% trans 'Admittance ' %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'admittance:list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Admittances" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item ">
+                <a href="{% url 'admittance:add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Admittance" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="menu-item  ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: grid"></i>
+            <div class="rad0-livicon-icon-name">{% trans 'Admittance Type' %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'admittance:type_list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Admittance Type" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item ">
+                <a href="{% url 'admittance:type_add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Admittance Type" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+    <!-- End Patients and Schedules -->
+
+
+    <!-- Receptions and Departments -->
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">{% trans 'Receptions' %} &amp; {% trans 'Departments' %}</span>
+    </li>
+
+    <li class="menu-item  ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: desktop"></i>
+            <div class="rad0-livicon-icon-name">{% trans "Reception" %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'reception:list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Receptionists" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item ">
+                <a href="{% url 'reception:add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Receptionist" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="menu-item  ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: box"></i>
+            <div class="rad0-livicon-icon-name">{% trans "Departments" %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'department:list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Departments" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item ">
+                <a href="{% url 'department:add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Department" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="menu-item  ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: briefcase"></i>
+            <div class="rad0-livicon-icon-name">{% trans "Specialities" %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-sub-item ">
+                <a href="{% url 'speciality:list' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: list;"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "List Specialities" %}</div>
+                </a>
+            </li>
+            <li class="menu-sub-item ">
+                <a href="{% url 'speciality:add' %}" class="menu-link">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: plus"></i>
+                    <div class="rad0-livicon-subicon-name">{% trans "Add Specliality" %}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="rad0-livicon-i menu-icon tf-icons" data-options="name: building"></i>
+            <div>{% trans 'Floor / Room' %}</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: swap-vertical"></i>
+                    <div>{% trans 'Floor ' %}</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-sub-item ml-2">
+                        <a href="{% url 'room:floor_list' %}" class="menu-link">
+                            <i class="rad0-sub-livicon-i sub-child-icon menu-icon tf-icons ml-2"
+                                data-options="name: list;"></i>
+                            <div class="rad0-livicon-subicon-name ml- 2">{% trans "List Floors " %}</div>
+                        </a>
+                    </li>
+                    <li class="menu-sub-item ml-2">
+                        <a href="{% url 'room:floor_add' %}" class="menu-link">
+                            <i class="rad0-sub-livicon-i sub-child-icon menu-icon tf-icons ml-2"
+                                data-options="name: plus"></i>
+                            <div class="rad0-livicon-subicon-name ml- 2">{% trans "Add Floor " %}</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="rad0-sub-livicon-i menu-icon tf-icons" data-options="name: morph-login2"></i>
+                    <div>{% trans 'Room' %}</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-sub-item ml-2">
+                        <a href="{% url 'room:list' %}" class="menu-link">
+                            <i class="rad0-sub-livicon-i sub-child-icon menu-icon tf-icons ml-2"
+                                data-options="name: list;"></i>
+                            <div class="rad0-livicon-subicon-name ml- 2">{% trans "List Rooms" %}</div>
+                        </a>
+                    </li>
+                    <li class="menu-sub-item ml-2">
+                        <a href="{% url 'room:add' %}" class="menu-link">
+                            <i class="rad0-sub-livicon-i sub-child-icon menu-icon tf-icons ml-2"
+                                data-options="name: plus"></i>
+                            <div class="rad0-livicon-subicon-name ml- 2">{% trans "Add Room" %}</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+
+    </li>
+    <!-- End Receptions and Departments -->
+</ul>

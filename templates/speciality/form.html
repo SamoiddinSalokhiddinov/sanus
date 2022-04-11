@@ -1,0 +1,78 @@
+{% extends '../layout/layout.html' %}
+{% load static i18n %}
+
+{% block title %}
+{% trans 'Application Form of Speciality' %}
+{% endblock %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet"
+  href="{% static 'assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/formvalidation/dist/css/formValidation.css' %}" />
+
+
+{% endblock %}
+{% block body %}
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h6 class="breadcrumb-wrapper py-3 mb-4">
+      <span class="text-muted fw-light">{% trans 'Specialities' %} /</span> {% trans 'Add Speciality' %}
+    </h6>
+
+    <div class="page-header">
+      <h2 class="text-dark text-center">{% trans 'Add Speciality' %}</h2>
+    </div>
+    <form method="POST" class="needs-validation" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ formset.management_form }}
+      <div class="card mb-4">
+        <h5 class="card-header text-center">{% trans 'Application Form of Speciality' %}</h5>
+        <div class="card-body">
+
+          <div class="row ">
+            <div class="col-md-6">
+              <label for="" class="form-label">{{ form.title.label }}</label>
+              {{ form.title }}
+              <p class="text-danger">
+                {{ form.title.errors.as_text }}
+              </p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">{{ form.department.label }}</label>
+              {{ form.department }}
+            </div>
+          </div>
+
+          <div class="invoice-action-btn mt-2 mb-1">
+            <button type="submit" class="btn btn-primary btn-block invoice-send-btn">
+              <i class="bx bxs-save"></i>
+              <span>{% trans 'Saqlash' %}</span>
+            </button>
+            <button type="reset" class="btn btn-label-secondary">Cancel</button>
+          </div>
+
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+  <!-- / Content -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<!-- AutoFocus plugin, automatically focus on the first invalid input  -->
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+
+{% endblock %}
